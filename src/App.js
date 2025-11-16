@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -19,6 +19,21 @@ const PolicySimulator = () => {
   const [fiscalStimulus, setFiscalStimulus] = useState(3.0);
   const [interestRateCut, setInterestRateCut] = useState(0.2);
   const [consumptionSubsidy, setConsumptionSubsidy] = useState(1.0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 检测屏幕大小
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
 
   // Calculate outcomes
   const calculateOutcomes = () => {
@@ -134,14 +149,14 @@ const PolicySimulator = () => {
         background:
           "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #3730a3 100%)",
         minHeight: "100vh",
-        padding: "20px",
+        padding: isMobile ? "12px" : "20px",
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         overflowX: "hidden",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto", overflow: "hidden" }}>
+      <div style={{ maxWidth: "100%", margin: "0 auto", overflow: "hidden" }}>
         {/* Header */}
         <div
           style={{
@@ -149,8 +164,8 @@ const PolicySimulator = () => {
             backdropFilter: "blur(20px)",
             borderRadius: "16px",
             border: "1px solid rgba(255, 255, 255, 0.1)",
-            padding: "28px",
-            marginBottom: "24px",
+            padding: isMobile ? "20px" : "28px",
+            marginBottom: isMobile ? "16px" : "24px",
             width: "100%",
             boxSizing: "border-box",
           }}
@@ -167,7 +182,7 @@ const PolicySimulator = () => {
             <div
               style={{
                 background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-                padding: "10px",
+                padding: isMobile ? "8px" : "10px",
                 borderRadius: "10px",
                 display: "flex",
                 alignItems: "center",
@@ -175,11 +190,11 @@ const PolicySimulator = () => {
                 flexShrink: 0,
               }}
             >
-              <Sliders size={24} color="white" />
+              <Sliders size={isMobile ? 20 : 24} color="white" />
             </div>
             <h1
               style={{
-                fontSize: "32px",
+                fontSize: isMobile ? "24px" : "32px",
                 fontWeight: "700",
                 background: "linear-gradient(135deg, #fff, #a5b4fc)",
                 WebkitBackgroundClip: "text",
@@ -194,7 +209,7 @@ const PolicySimulator = () => {
           <p
             style={{
               color: "#cbd5e1",
-              fontSize: "18px",
+              fontSize: isMobile ? "14px" : "18px",
               margin: "8px 0 0 0",
               lineHeight: "1.5",
             }}
@@ -204,13 +219,13 @@ const PolicySimulator = () => {
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "24px" }}>
           {/* Policy Controls */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "24px",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: isMobile ? "16px" : "24px",
             }}
           >
             {/* Fiscal Policy */}
@@ -220,7 +235,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
@@ -228,9 +243,9 @@ const PolicySimulator = () => {
               <h3
                 style={{
                   color: "white",
-                  fontSize: "20px",
+                  fontSize: isMobile ? "16px" : "20px",
                   fontWeight: "600",
-                  marginBottom: "20px",
+                  marginBottom: isMobile ? "16px" : "20px",
                 }}
               >
                 Fiscal Stimulus
@@ -241,8 +256,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#94a3b8",
-                    fontSize: "16px",
-                    marginBottom: "12px",
+                    fontSize: isMobile ? "14px" : "16px",
+                    marginBottom: isMobile ? "8px" : "12px",
                   }}
                 >
                   <span>Spending Package</span>
@@ -261,7 +276,7 @@ const PolicySimulator = () => {
                   }
                   style={{
                     width: "100%",
-                    height: "8px",
+                    height: isMobile ? "6px" : "8px",
                     borderRadius: "4px",
                     background: "linear-gradient(90deg, #3b82f6, #8b5cf6)",
                     outline: "none",
@@ -272,8 +287,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#64748b",
-                    fontSize: "14px",
-                    marginTop: "8px",
+                    fontSize: isMobile ? "12px" : "14px",
+                    marginTop: isMobile ? "4px" : "8px",
                   }}
                 >
                   <span>¥0T</span>
@@ -285,13 +300,13 @@ const PolicySimulator = () => {
                   background: "rgba(59, 130, 246, 0.1)",
                   border: "1px solid rgba(59, 130, 246, 0.2)",
                   borderRadius: "10px",
-                  padding: "16px",
+                  padding: isMobile ? "12px" : "16px",
                 }}
               >
                 <div
                   style={{
                     color: "#93c5fd",
-                    fontSize: "14px",
+                    fontSize: isMobile ? "12px" : "14px",
                     marginBottom: "6px",
                   }}
                 >
@@ -300,13 +315,13 @@ const PolicySimulator = () => {
                 <div
                   style={{
                     color: "white",
-                    fontSize: "20px",
+                    fontSize: isMobile ? "16px" : "20px",
                     fontWeight: "600",
                   }}
                 >
                   +{outcomes.fiscalImpact.toFixed(1)}T GDP
                 </div>
-                <div style={{ color: "#93c5fd", fontSize: "14px" }}>
+                <div style={{ color: "#93c5fd", fontSize: isMobile ? "12px" : "14px" }}>
                   Multiplier: 2.5x
                 </div>
               </div>
@@ -319,7 +334,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
@@ -327,9 +342,9 @@ const PolicySimulator = () => {
               <h3
                 style={{
                   color: "white",
-                  fontSize: "20px",
+                  fontSize: isMobile ? "16px" : "20px",
                   fontWeight: "600",
-                  marginBottom: "20px",
+                  marginBottom: isMobile ? "16px" : "20px",
                 }}
               >
                 Monetary Policy
@@ -340,8 +355,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#94a3b8",
-                    fontSize: "16px",
-                    marginBottom: "12px",
+                    fontSize: isMobile ? "14px" : "16px",
+                    marginBottom: isMobile ? "8px" : "12px",
                   }}
                 >
                   <span>Interest Rate Cut</span>
@@ -360,7 +375,7 @@ const PolicySimulator = () => {
                   }
                   style={{
                     width: "100%",
-                    height: "8px",
+                    height: isMobile ? "6px" : "8px",
                     borderRadius: "4px",
                     background: "linear-gradient(90deg, #8b5cf6, #a855f7)",
                     outline: "none",
@@ -371,8 +386,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#64748b",
-                    fontSize: "14px",
-                    marginTop: "8px",
+                    fontSize: isMobile ? "12px" : "14px",
+                    marginTop: isMobile ? "4px" : "8px",
                   }}
                 >
                   <span>0bp</span>
@@ -384,13 +399,13 @@ const PolicySimulator = () => {
                   background: "rgba(139, 92, 246, 0.1)",
                   border: "1px solid rgba(139, 92, 246, 0.2)",
                   borderRadius: "10px",
-                  padding: "16px",
+                  padding: isMobile ? "12px" : "16px",
                 }}
               >
                 <div
                   style={{
                     color: "#c4b5fd",
-                    fontSize: "14px",
+                    fontSize: isMobile ? "12px" : "14px",
                     marginBottom: "6px",
                   }}
                 >
@@ -399,13 +414,13 @@ const PolicySimulator = () => {
                 <div
                   style={{
                     color: "white",
-                    fontSize: "20px",
+                    fontSize: isMobile ? "16px" : "20px",
                     fontWeight: "600",
                   }}
                 >
                   +{outcomes.monetaryImpact.toFixed(1)}T GDP
                 </div>
-                <div style={{ color: "#c4b5fd", fontSize: "14px" }}>
+                <div style={{ color: "#c4b5fd", fontSize: isMobile ? "12px" : "14px" }}>
                   Limited transmission
                 </div>
               </div>
@@ -418,7 +433,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
@@ -426,9 +441,9 @@ const PolicySimulator = () => {
               <h3
                 style={{
                   color: "white",
-                  fontSize: "20px",
+                  fontSize: isMobile ? "16px" : "20px",
                   fontWeight: "600",
-                  marginBottom: "20px",
+                  marginBottom: isMobile ? "16px" : "20px",
                 }}
               >
                 Consumption Subsidy
@@ -439,8 +454,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#94a3b8",
-                    fontSize: "16px",
-                    marginBottom: "12px",
+                    fontSize: isMobile ? "14px" : "16px",
+                    marginBottom: isMobile ? "8px" : "12px",
                   }}
                 >
                   <span>Direct Transfers</span>
@@ -459,7 +474,7 @@ const PolicySimulator = () => {
                   }
                   style={{
                     width: "100%",
-                    height: "8px",
+                    height: isMobile ? "6px" : "8px",
                     borderRadius: "4px",
                     background: "linear-gradient(90deg, #10b981, #059669)",
                     outline: "none",
@@ -470,8 +485,8 @@ const PolicySimulator = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     color: "#64748b",
-                    fontSize: "14px",
-                    marginTop: "8px",
+                    fontSize: isMobile ? "12px" : "14px",
+                    marginTop: isMobile ? "4px" : "8px",
                   }}
                 >
                   <span>¥0T</span>
@@ -483,13 +498,13 @@ const PolicySimulator = () => {
                   background: "rgba(16, 185, 129, 0.1)",
                   border: "1px solid rgba(16, 185, 129, 0.2)",
                   borderRadius: "10px",
-                  padding: "16px",
+                  padding: isMobile ? "12px" : "16px",
                 }}
               >
                 <div
                   style={{
                     color: "#6ee7b7",
-                    fontSize: "14px",
+                    fontSize: isMobile ? "12px" : "14px",
                     marginBottom: "6px",
                   }}
                 >
@@ -498,13 +513,13 @@ const PolicySimulator = () => {
                 <div
                   style={{
                     color: "white",
-                    fontSize: "20px",
+                    fontSize: isMobile ? "16px" : "20px",
                     fontWeight: "600",
                   }}
                 >
                   +{outcomes.consumptionImpact.toFixed(1)}T GDP
                 </div>
-                <div style={{ color: "#6ee7b7", fontSize: "14px" }}>
+                <div style={{ color: "#6ee7b7", fontSize: isMobile ? "12px" : "14px" }}>
                   High MPC effect
                 </div>
               </div>
@@ -515,8 +530,8 @@ const PolicySimulator = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "20px",
+              gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(2, 1fr)",
+              gap: isMobile ? "12px" : "20px",
             }}
           >
             <div
@@ -525,7 +540,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 textAlign: "center",
                 width: "100%",
                 boxSizing: "border-box",
@@ -534,8 +549,8 @@ const PolicySimulator = () => {
               <div
                 style={{
                   color: "#93c5fd",
-                  fontSize: "16px",
-                  marginBottom: "12px",
+                  fontSize: isMobile ? "14px" : "16px",
+                  marginBottom: isMobile ? "8px" : "12px",
                 }}
               >
                 GDP GROWTH
@@ -548,14 +563,14 @@ const PolicySimulator = () => {
                       : outcomes.gdpGrowth >= 4.5
                       ? "#f59e0b"
                       : "#ef4444",
-                  fontSize: "28px",
+                  fontSize: isMobile ? "20px" : "28px",
                   fontWeight: "700",
-                  marginBottom: "8px",
+                  marginBottom: isMobile ? "4px" : "8px",
                 }}
               >
                 {outcomes.gdpGrowth.toFixed(1)}%
               </div>
-              <div style={{ color: "#64748b", fontSize: "14px" }}>
+              <div style={{ color: "#64748b", fontSize: isMobile ? "12px" : "14px" }}>
                 Target: 5.5%
               </div>
             </div>
@@ -566,7 +581,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 textAlign: "center",
                 width: "100%",
                 boxSizing: "border-box",
@@ -575,8 +590,8 @@ const PolicySimulator = () => {
               <div
                 style={{
                   color: "#c4b5fd",
-                  fontSize: "16px",
-                  marginBottom: "12px",
+                  fontSize: isMobile ? "14px" : "16px",
+                  marginBottom: isMobile ? "8px" : "12px",
                 }}
               >
                 UNEMPLOYMENT
@@ -589,14 +604,14 @@ const PolicySimulator = () => {
                       : outcomes.unemployment <= 5.5
                       ? "#f59e0b"
                       : "#ef4444",
-                  fontSize: "28px",
+                  fontSize: isMobile ? "20px" : "28px",
                   fontWeight: "700",
-                  marginBottom: "8px",
+                  marginBottom: isMobile ? "4px" : "8px",
                 }}
               >
                 {outcomes.unemployment.toFixed(1)}%
               </div>
-              <div style={{ color: "#64748b", fontSize: "14px" }}>
+              <div style={{ color: "#64748b", fontSize: isMobile ? "12px" : "14px" }}>
                 Target: ≤5.0%
               </div>
             </div>
@@ -607,7 +622,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 textAlign: "center",
                 width: "100%",
                 boxSizing: "border-box",
@@ -616,8 +631,8 @@ const PolicySimulator = () => {
               <div
                 style={{
                   color: "#fdba74",
-                  fontSize: "16px",
-                  marginBottom: "12px",
+                  fontSize: isMobile ? "14px" : "16px",
+                  marginBottom: isMobile ? "8px" : "12px",
                 }}
               >
                 INFLATION (CPI)
@@ -628,14 +643,14 @@ const PolicySimulator = () => {
                     outcomes.inflation >= 1 && outcomes.inflation <= 3
                       ? "#10b981"
                       : "#f59e0b",
-                  fontSize: "28px",
+                  fontSize: isMobile ? "20px" : "28px",
                   fontWeight: "700",
-                  marginBottom: "8px",
+                  marginBottom: isMobile ? "4px" : "8px",
                 }}
               >
                 {outcomes.inflation.toFixed(1)}%
               </div>
-              <div style={{ color: "#64748b", fontSize: "14px" }}>
+              <div style={{ color: "#64748b", fontSize: isMobile ? "12px" : "14px" }}>
                 Target: 1-3%
               </div>
             </div>
@@ -646,7 +661,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 textAlign: "center",
                 width: "100%",
                 boxSizing: "border-box",
@@ -655,8 +670,8 @@ const PolicySimulator = () => {
               <div
                 style={{
                   color: "#fca5a5",
-                  fontSize: "16px",
-                  marginBottom: "12px",
+                  fontSize: isMobile ? "14px" : "16px",
+                  marginBottom: isMobile ? "8px" : "12px",
                 }}
               >
                 GOVT DEBT/GDP
@@ -669,14 +684,14 @@ const PolicySimulator = () => {
                       : outcomes.debt <= 110
                       ? "#f59e0b"
                       : "#ef4444",
-                  fontSize: "28px",
+                  fontSize: isMobile ? "20px" : "28px",
                   fontWeight: "700",
-                  marginBottom: "8px",
+                  marginBottom: isMobile ? "4px" : "8px",
                 }}
               >
                 {outcomes.debt.toFixed(0)}%
               </div>
-              <div style={{ color: "#64748b", fontSize: "14px" }}>
+              <div style={{ color: "#64748b", fontSize: isMobile ? "12px" : "14px" }}>
                 Threshold: 100%
               </div>
             </div>
@@ -689,25 +704,25 @@ const PolicySimulator = () => {
               backdropFilter: "blur(20px)",
               borderRadius: "12px",
               border: `1px solid ${risk.color}40`,
-              padding: "24px",
-              marginBottom: "24px",
+              padding: isMobile ? "16px" : "24px",
+              marginBottom: isMobile ? "16px" : "24px",
               width: "100%",
               boxSizing: "border-box",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <AlertCircle size={24} color={risk.color} />
+              <AlertCircle size={isMobile ? 20 : 24} color={risk.color} />
               <div>
                 <div
                   style={{
                     color: "white",
-                    fontSize: "18px",
+                    fontSize: isMobile ? "16px" : "18px",
                     fontWeight: "600",
                   }}
                 >
                   Risk Level: {risk.level}
                 </div>
-                <div style={{ color: risk.color, fontSize: "16px" }}>
+                <div style={{ color: risk.color, fontSize: isMobile ? "14px" : "16px" }}>
                   {risk.message}
                 </div>
               </div>
@@ -717,9 +732,9 @@ const PolicySimulator = () => {
           {/* Charts */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))",
-              gap: "24px",
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              gap: isMobile ? "16px" : "24px",
             }}
           >
             {/* Time Series Chart */}
@@ -729,7 +744,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 width: "100%",
                 boxSizing: "border-box",
                 overflow: "hidden",
@@ -738,25 +753,25 @@ const PolicySimulator = () => {
               <h3
                 style={{
                   color: "white",
-                  fontSize: "20px",
+                  fontSize: isMobile ? "16px" : "20px",
                   fontWeight: "600",
-                  marginBottom: "20px",
+                  marginBottom: isMobile ? "16px" : "20px",
                 }}
               >
                 Macroeconomic Trajectory (2021-2025)
               </h3>
-              <div style={{ width: "100%", height: "320px" }}>
+              <div style={{ width: "100%", height: isMobile ? "250px" : "320px" }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={timeSeriesData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis
                       dataKey="year"
                       stroke="#9ca3af"
-                      tick={{ fill: "#9ca3af", fontSize: 14 }}
+                      tick={{ fill: "#9ca3af", fontSize: isMobile ? 12 : 14 }}
                     />
                     <YAxis
                       stroke="#9ca3af"
-                      tick={{ fill: "#9ca3af", fontSize: 14 }}
+                      tick={{ fill: "#9ca3af", fontSize: isMobile ? 12 : 14 }}
                     />
                     <Tooltip
                       contentStyle={{
@@ -766,29 +781,29 @@ const PolicySimulator = () => {
                         color: "white",
                       }}
                     />
-                    <Legend wrapperStyle={{ fontSize: "14px" }} />
+                    <Legend wrapperStyle={{ fontSize: isMobile ? "12px" : "14px" }} />
                     <Line
                       type="monotone"
                       dataKey="gdp"
                       stroke="#3b82f6"
-                      strokeWidth={3}
-                      dot={{ fill: "#3b82f6", strokeWidth: 2, r: 4 }}
+                      strokeWidth={isMobile ? 2 : 3}
+                      dot={{ fill: "#3b82f6", strokeWidth: 2, r: isMobile ? 3 : 4 }}
                       name="GDP Growth (%)"
                     />
                     <Line
                       type="monotone"
                       dataKey="unemployment"
                       stroke="#ef4444"
-                      strokeWidth={3}
-                      dot={{ fill: "#ef4444", strokeWidth: 2, r: 4 }}
+                      strokeWidth={isMobile ? 2 : 3}
+                      dot={{ fill: "#ef4444", strokeWidth: 2, r: isMobile ? 3 : 4 }}
                       name="Unemployment (%)"
                     />
                     <Line
                       type="monotone"
                       dataKey="inflation"
                       stroke="#10b981"
-                      strokeWidth={3}
-                      dot={{ fill: "#10b981", strokeWidth: 2, r: 4 }}
+                      strokeWidth={isMobile ? 2 : 3}
+                      dot={{ fill: "#10b981", strokeWidth: 2, r: isMobile ? 3 : 4 }}
                       name="Inflation (%)"
                     />
                   </LineChart>
@@ -803,7 +818,7 @@ const PolicySimulator = () => {
                 backdropFilter: "blur(20px)",
                 borderRadius: "12px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                padding: "24px",
+                padding: isMobile ? "16px" : "24px",
                 width: "100%",
                 boxSizing: "border-box",
                 overflow: "hidden",
@@ -812,25 +827,25 @@ const PolicySimulator = () => {
               <h3
                 style={{
                   color: "white",
-                  fontSize: "20px",
+                  fontSize: isMobile ? "16px" : "20px",
                   fontWeight: "600",
-                  marginBottom: "20px",
+                  marginBottom: isMobile ? "16px" : "20px",
                 }}
               >
                 Policy Contribution to GDP Growth
               </h3>
-              <div style={{ width: "100%", height: "320px" }}>
+              <div style={{ width: "100%", height: isMobile ? "250px" : "320px" }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={policyBreakdown}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis
                       dataKey="name"
                       stroke="#9ca3af"
-                      tick={{ fill: "#9ca3af", fontSize: 14 }}
+                      tick={{ fill: "#9ca3af", fontSize: isMobile ? 12 : 14 }}
                     />
                     <YAxis
                       stroke="#9ca3af"
-                      tick={{ fill: "#9ca3af", fontSize: 14 }}
+                      tick={{ fill: "#9ca3af", fontSize: isMobile ? 12 : 14 }}
                     />
                     <Tooltip
                       contentStyle={{
@@ -848,14 +863,14 @@ const PolicySimulator = () => {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <div style={{ color: "#9ca3af", fontSize: "16px" }}>
+              <div style={{ textAlign: "center", marginTop: isMobile ? "12px" : "20px" }}>
+                <div style={{ color: "#9ca3af", fontSize: isMobile ? "14px" : "16px" }}>
                   Total GDP Impact
                 </div>
                 <div
                   style={{
                     color: "white",
-                    fontSize: "28px",
+                    fontSize: isMobile ? "20px" : "28px",
                     fontWeight: "700",
                   }}
                 >
@@ -879,17 +894,17 @@ const PolicySimulator = () => {
               backdropFilter: "blur(20px)",
               borderRadius: "12px",
               border: "1px solid rgba(16, 185, 129, 0.2)",
-              padding: "24px",
-              marginBottom: "24px",
+              padding: isMobile ? "16px" : "24px",
+              marginBottom: isMobile ? "16px" : "24px",
               width: "100%",
               boxSizing: "border-box",
             }}
           >
             <div
-              style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}
+              style={{ display: "flex", alignItems: "flex-start", gap: isMobile ? "12px" : "16px" }}
             >
               <TrendingUp
-                size={24}
+                size={isMobile ? 20 : 24}
                 color="#10b981"
                 style={{ marginTop: "2px", flexShrink: 0 }}
               />
@@ -897,9 +912,9 @@ const PolicySimulator = () => {
                 <h3
                   style={{
                     color: "white",
-                    fontSize: "20px",
+                    fontSize: isMobile ? "16px" : "20px",
                     fontWeight: "600",
-                    marginBottom: "12px",
+                    marginBottom: isMobile ? "8px" : "12px",
                   }}
                 >
                   Optimal Policy Recommendation
@@ -907,8 +922,8 @@ const PolicySimulator = () => {
                 <p
                   style={{
                     color: "#cbd5e1",
-                    fontSize: "16px",
-                    lineHeight: "1.6",
+                    fontSize: isMobile ? "14px" : "16px",
+                    lineHeight: "1.5",
                     margin: 0,
                   }}
                 >
@@ -936,7 +951,7 @@ const PolicySimulator = () => {
               backdropFilter: "blur(20px)",
               borderRadius: "12px",
               border: "1px solid rgba(255, 255, 255, 0.1)",
-              padding: "24px",
+              padding: isMobile ? "16px" : "24px",
               width: "100%",
               boxSizing: "border-box",
             }}
@@ -944,9 +959,9 @@ const PolicySimulator = () => {
             <h3
               style={{
                 color: "white",
-                fontSize: "20px",
+                fontSize: isMobile ? "16px" : "20px",
                 fontWeight: "600",
-                marginBottom: "16px",
+                marginBottom: isMobile ? "12px" : "16px",
               }}
             >
               Model Specifications & Assumptions
@@ -954,15 +969,15 @@ const PolicySimulator = () => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                gap: "20px",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: isMobile ? "16px" : "20px",
               }}
             >
               <div
                 style={{
                   color: "#cbd5e1",
-                  fontSize: "16px",
-                  lineHeight: "1.6",
+                  fontSize: isMobile ? "14px" : "16px",
+                  lineHeight: "1.5",
                 }}
               >
                 <div>
@@ -985,8 +1000,8 @@ const PolicySimulator = () => {
               <div
                 style={{
                   color: "#cbd5e1",
-                  fontSize: "16px",
-                  lineHeight: "1.6",
+                  fontSize: isMobile ? "14px" : "16px",
+                  lineHeight: "1.5",
                 }}
               >
                 <div>
@@ -1010,8 +1025,8 @@ const PolicySimulator = () => {
             <p
               style={{
                 color: "#64748b",
-                fontSize: "14px",
-                marginTop: "20px",
+                fontSize: isMobile ? "12px" : "14px",
+                marginTop: isMobile ? "16px" : "20px",
                 lineHeight: "1.5",
               }}
             >
@@ -1027,7 +1042,7 @@ const PolicySimulator = () => {
               textAlign: "center",
               color: "#64748b",
               padding: "20px 0",
-              fontSize: "14px",
+              fontSize: isMobile ? "12px" : "14px",
               marginTop: "20px",
             }}
           >
