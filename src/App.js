@@ -1061,6 +1061,26 @@ const PolicySimulator = () => {
           >
             Developed by Caro (SHAOYANQI) | Macroeconomic Policy Simulator 2024
           </div>
+              <div
+  style={{
+    textAlign: "center",
+    color: "#475569",
+    padding: "10px 0",
+    fontSize: "12px",
+    borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+    marginTop: "10px",
+  }}
+>
+  For authentic economic analysis:{" "}
+  <a 
+    href="https://www.imf.org/en/news/articles/2024/07/31/pr24295-china-imf-exec-board-concludes-2024-art-iv-consult" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    style={{ color: "#60a5fa", textDecoration: "none" }}
+  >
+    IMF 2024 Article IV Consultation with China
+  </a>
+</div>
         </div>
       </div>
     </div>
